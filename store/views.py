@@ -7,7 +7,7 @@ from .models import Category, Product
 
 
 def product_all(request):
-    products = Product.products.filter(is_active=True)
+    products = Product.products.filter(is_active=True, in_stock=True)
     return render(request, 'store/home.html', {'products': products})
 
 
