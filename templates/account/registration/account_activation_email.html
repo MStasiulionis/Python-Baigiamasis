@@ -1,0 +1,7 @@
+{% autoescape off %}
+Sveiki {{ user.user_name }},
+
+Jūsų paskyra sėkmingai sukurta. Norėdami pabaikiti registraciją paspauskite ant nuorodos.
+
+http://{{ domain }}{% url 'account:activate' uidb64=uid token=token %}
+{% endautoescape %}

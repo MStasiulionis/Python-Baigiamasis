@@ -1,0 +1,108 @@
+{% extends "../store/base.html" %}
+{% load static %}
+{% block title %}Payment{% endblock %}
+{% block content %}
+
+<style>
+  .form-control {
+    border: 2px solid #ccc;
+  }
+
+  .account-form input:focus {
+    border-color: #1497ff;
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075), 0 0 0px rgba(255, 0, 0, 0.6);
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="col-md-12">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div id="payment-form" class="col-12 col-lg-6 mx-auto">
+              <h3 class="mb-3">Atsiskaitymas už prekes</h3>
+              <!-- Error messages in this element -->
+              <div id="card-errors" class="a" role="alert"></div>
+              <form>
+                <div class="row g-3">
+                  <div class="col-sm-7">
+                    <label for="custName" class="form-label">Vardas, pavardė</label>
+                    <input type="text" class="form-control" id="custName" placeholder="Vardas Pavardė" required>
+                    <div class="invalid-feedback">
+                      Valid first name is required.
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="email" class="form-label">El. paštas</label>
+                    <input type="email" class="form-control" id="email" placeholder="example@example.com">
+                    <div class="invalid-feedback">
+                      El. paštas negalioja įveskite teisingai.
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="custAdd" class="form-label">Adresas</label>
+                    <input type="text" class="form-control" id="custAdd" placeholder="Gatvė g. 12" required>
+                    <div class="invalid-feedback">
+                      Įveskite pristatymo adresą.
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="custAdd2" class="form-label">Buto numeris <span
+                        class="text-muted">(Nebūtina)</span></label>
+                    <input type="text" class="form-control" id="custAdd2" placeholder="Buto numeris">
+                  </div>
+                  <div class="col-md-5">
+                    <label for="country" class="form-label">Šalis</label>
+                    <select class="form-select" id="country" required>
+                      <option value="">Pasirinkti</option>
+                      <option>Lietuva</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Pasirinkite šalį.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="state" class="form-label">Miestas</label>
+                    <select class="form-select" id="state" required>
+                      <option value="">Pasirinkti</option>
+                      <option>Vilnius</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Pasirinkite miestą.
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="Postcode" class="form-label">Pašto kodas</label>
+                    <input type="text" class="form-control" id="postCode" required>
+                    <div class="invalid-feedback">
+                      Įveskite pašto kodą
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4">
+                <h4 class="mb-3">Apmokėjimas</h4>
+                <label for="card-element">Banko kortelė</label>
+                <div id="card-element" class="form-control form-control-payment">
+                  <!-- Payment elements will appear here -->
+                </div>
+                <hr class="my-4">
+                <button id="submit" class="btn btn-primary w-100 fw-bold" data-secret="{{ client_secret }}">Mokėti</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    {% comment %} Make csrf token availble in JS files {% endcomment %}
+    var CSRF_TOKEN = '{{ csrf_token }}';
+</script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'payment/index.js' %}" data-rel-js></script>
+
+{% endblock %}
